@@ -10,9 +10,11 @@
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
-// var cookieParser = require('cookie-parser');
+
+var cookieParser = require('cookie-parser');
+
 const path = require('path');
-const res = require('express/lib/response');
+
 var client_id = 'daecd7247b0943c1b9ced01098c0b1e0'
 var client_secret = 'c0bcfa77bf9c4506af98ae9c4d42b8ab'
 var redirect_uri = 'http://localhost:8888/callback'
@@ -32,14 +34,17 @@ var generateRandomString = function(length) {
     return text;
 };
 
+var stateKey = "spotify_auth_state";
+
 var app = express();
 
 app.use(express.static(path.join(__dirname, '/public')))
-//  .use(cookieParser());
+   .use(cookieParser());
 
 app.get('/login', function(req, res) {
-    var state = generateRandomString16;
+    var state = generateRandomString(16);
     var scope = 'user-read-private user-read-email user-top-read';
+    res.cookie(stateKey, state);
 
     res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
@@ -51,14 +56,14 @@ app.get('/login', function(req, res) {
     }));
 });
 
-app.get('callback', function(req, res) {
+app.get('/callback', function(req, res) {
 
     // your application requests refresh and access tokens
     // after checking the state parameter
 
     var code = req.query.code || null;
     var state = req.query.state || null;
-    var storedState = req.cookies ? req.cookies[statekey] : null;
+    var storedState = req.cookies ? req.cookies[stateKey] : null;
 
     if (state === null || state !== storedState) {
         res.redirect('/#' +
