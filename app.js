@@ -15,8 +15,8 @@ var cookieParser = require('cookie-parser');
 
 const path = require('path');
 
-var client_id = 'daecd7247b0943c1b9ced01098c0b1e0'
-var client_secret = 'c0bcfa77bf9c4506af98ae9c4d42b8ab'
+var client_id = '5db08752213242c392d4491cc0011470'
+var client_secret = '9bcc6362f1594c45932491356eb7efed'
 var redirect_uri = 'http://localhost:8888/callback'
 
 /**
@@ -43,7 +43,7 @@ app.use(express.static(path.join(__dirname, '/public')))
 
 app.get('/login', function(req, res) {
     var state = generateRandomString(16);
-    var scope = 'user-read-private user-read-email user-top-read';
+    var scope = 'user-read-private user-read-email user-top-read user-read-currently-playing user-read-playback-state';
     res.cookie(stateKey, state);
 
     res.redirect('https://accounts.spotify.com/authorize?' +

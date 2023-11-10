@@ -6,6 +6,24 @@
     <title>Top Tracks Page</title>
 
     <style>
+        #polaroidContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .polaroid {
+            background-color: white;
+            padding: 1em;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: .5em;
+            text-align: center;
+            max-width: 300px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .polaroid:hover {
+            transform: scale(1.05);
+        }
+
         .login-btn {
             color: white;
             background-color: #1db954;
@@ -28,8 +46,9 @@
         }
     </style>
 </head>
+
 <body>
-    <button class="login-btn">
+    <button id="login" class="login-btn">
         <a href="/login">Log in with Spotify
             <br>
             <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Black.png" width="200px">
@@ -39,50 +58,24 @@
     <div id="loggedin">
         <h2>Top Track Generator</h2>
         <div>
-            <button id="short_term">Last 30 Days</button>
-            <button id="medium_term">Last 6 Months</button>
-            <button id="long_term">All Time</button>
+            <button id="short_term" class="polaroid">Last 30 Days</button>
+            <button id="medium_term" class="polaroid">Last 6 Months</button>
+            <button id="long_term" class="polaroid">All Time</button>
+            <button id="queue_button" class="polaroid">Current Queue</button>
         </div>
+        <div id="polaroidContainer">
 
+        </div>
     </div>
 
-    <table style="text-align: left; margin-left: auto; margin-right: auto;">
-        <thead>
-            <tr>
-                <th>
-                    #
-                </th>
-                <th>
-                    TITLE
-                </th>
-                <th>
-                    ARTIST
-                </th>
-                <th>
-                    LENGTH
-                </th>
-            </tr>
-        </thead>
-        <tbody id="trackTableBody">
-            <!-- all song information will be added here from js -->
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="3">SONG COUNT:</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td colspan="3">TOTAL LENGTH:</td>
-                <td id="totalLength">
-                    <!-- total length will be synamically added here in javascript -->
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-
+    <h1>Currently Playing:</h1>
+    <div id="current-track-info">
+        <img id="album-conver" src="" style="width: 200px;height: 200px;"><br>
+        <span id="progress"></span> / <span id="duration"></span><br>
+        <span id="curret-track"></span><br>
+        <span id="curret-artist"></span><br>
+    </div>
     <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script>
-        $("#loggedin").show()
-    </script>
+    <script src="server.js"></script>
 </body>
 </html>
